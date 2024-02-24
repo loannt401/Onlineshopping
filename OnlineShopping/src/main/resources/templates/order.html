@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đơn hàng</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link th:href="@{/css/reuse.css}" rel="stylesheet">
+    <style>
+        .payment {
+            /* border: 1px solid black; */
+            box-shadow: 0 1px 2px 0 rgb(60 64 67/ 10%), 0 2px 6px 2px rgb(60 64 67/ 15%); 
+            width: 60%;
+            margin: auto;
+            margin-top: 3vw;
+            padding: 5vw;
+            padding-bottom: 3vw;
+            box-sizing: border-box;
+            text-align: start;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .payment h1 {
+            text-align: center;
+        }
+
+        .payment ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .payment label {
+            width: 10vw;
+            display: inline-block;
+            margin-bottom: 1vw;
+        }
+        
+        .payment span {
+			font-weight: lighter;
+		}
+
+        .payment .infor-cart .infor-item {
+            border: 1px solid rgb(178, 178, 178);
+            height: 5vw;
+            display: flex;
+            justify-content: space-between;
+            line-height: 100%;
+            text-align: center;
+            margin-bottom: 1vw;
+        }
+
+        .payment .infor-cart .infor-item .img {
+            /* border: 1px solid black; */
+            width: 7%;
+            margin: 0.3vw;
+        }
+
+        .payment .infor-cart .infor-item .img img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .payment .infor-cart .infor-item .name {
+            /* border: 1px solid black; */
+            width: 40%;
+        }
+
+        .payment .infor-cart .infor-item .price {
+            /* border: 1px solid black; */
+            width: 20%;
+        }
+
+        .payment .infor-cart .infor-item .quantity {
+            /* border: 1px solid black; */
+            width: 10%;
+        }
+
+        .payment .infor-price label {
+            width: 40vw;
+            display: inline-block;
+            margin-bottom: 1vw;
+
+        }
+
+        .payment .infor-price span {
+            text-align: end;
+        }
+
+        .payment .infor-pay button {
+            width: 70%;
+            height: 2.5vw;
+            display: block;
+            margin: auto;
+            margin-top: 3vw;
+            margin-bottom: 2vw;
+            font-weight: bold;
+            font-size: 1vw;
+            background-color: rgb(94, 94, 255);
+            border: 1px solid white;
+            color: white;
+        }
+        
+        .mess_success {
+            background-color: rgba(133, 235, 233,0.8); 
+            color: white;
+            padding: 10px;
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            min-width: 400px;
+            min-height: 200px;
+            line-height: 200px;
+            text-align: center;
+            border-radius: 20px;
+            transform: translate(-50%, -50%);
+        }
+
+    </style>
+</head>
+<body>
+	<div th:replace="header.html :: header"></div>
+    <div class="distance"></div>
+    <div class="payment">
+        <h1>Thông tin đơn hàng</h1>
+        <br>
+        <div class="time-order">
+            <hr>
+            <h3>Thời gian đặt hàng: </h3>
+            <ul>
+                <li>
+                    <label for="date">Thời gian: </label>
+                    <span th:text="${order.date}"></span>
+                </li>
+            </ul>
+        </div>
+        <div class="infor-ship">
+            <hr>
+            <h3>Thông tin vận chuyển:</h3>
+            <ul>
+                <li>
+                    <label for="fullname">Tên người nhận: </label>
+                    <span th:text="${order.shipment.fullname}"></span>
+                </li>
+                <li>
+                    <label for="phone">Số điện thoại: </label>
+                    <span th:text="${order.shipment.phone}"></span>
+                </li>
+                <li>
+                    <label for="address">Địa chỉ: </label>
+                    <span th:text="${order.shipment.address.getFullAddress()}"></span>
+                </li>
+                <li>
+                    <label for="typeShip">Loại vận chuyển: </label>
+                    <span th:text="${order.shipment.typeShip.nameShip}"></span>
+                </li>
+            </ul>
+        </div>
+        <div class="infor-cart">
+            <hr>
+            <h3>Thông tin sản phẩm: </h3>
+            <div class="infor-item" th:each="entry : ${order.cart.items}">
+                <div class="img"><img th:src="*{entry.key.getImage().link}" alt="${entry.key.getImage().name}"></div>
+                <div class="name">
+                    <h4 th:text="${entry.key.name}"></h4>
+                </div>
+                <div class="price">
+                    <h4 th:text="${#numbers.formatInteger(entry.key.price.sellingPrice, 3, 'POINT')} + '₫'"></h4>
+                </div>
+                <div class="quantity">
+                    <h4 th:text="${entry.value}"></h4>
+                </div>
+            </div>
+        </div>
+        <div class="infor-price">
+            <hr>
+            <h3>Hóa đơn: </h3>
+            <label for="amountCart">Tổng tiền sản phẩm:</label>
+            <span th:text="${#numbers.formatInteger(order.payment.amountCart, 3, 'POINT')} + '₫'"></span>
+            <br>
+            <label for="costShip">Phí vận chuyển: </label>
+            <span th:text="${#numbers.formatInteger(order.payment.costShipment, 3, 'POINT')} + '₫'"></span>
+            <br>
+            <label for="totalPrice"><b>Tổng đơn hàng:</b> </label>
+            <span><b th:text="${#numbers.formatInteger(order.payment.totalPrice, 3, 'POINT')} + '₫'"></b></span>
+            <br>
+            <label for="status">Trạng thái đơn hàng: </label>
+            <span style="color: red;" th:text="${order.payment.statusPayment.nameStatusPay}"></span>
+        </div>
+        
+    </div>
+
+    <div class="mess_success" id="message">
+        <h1 th:text="${success}"></h1>
+    </div>
+    <script th:if="${success != null}">
+    	function showMessageSuccess(time){
+                    var successMess = document.getElementById('message');
+                    successMess.style.display = 'block';
+                    setTimeout(function() {
+                        successMess.style.display = 'none';
+
+                    }, time);
+                }
+
+        showMessageSuccess(2000);
+	</script>
+</body>
+</html>

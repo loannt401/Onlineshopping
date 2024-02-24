@@ -1,0 +1,44 @@
+<div th:fragment="header">
+    <div class="header-menu">
+        <a th:href="@{/home}"><img style="float: left; width: 10%; height: 5vw; margin-left: 100px;" th:src="@{/image/logo.png}" alt=""></a>
+        <div class="menu">
+            <ul>
+                <li class="menu-cap1">
+                    <a th:href="@{/home}" class="menu-cap1-title">TRANG CHỦ</a>
+                </li>
+                <li class="menu-cap1">
+                    <a th:href="@{/home(cateid=1)}" class="menu-cap1-title">SÁCH</a>
+                </li>
+                <li class="menu-cap1">
+                    <a th:href="@{/home(cateid=2)}" class="menu-cap1-title">QUẦN ÁO</a>
+                </li>
+                <li class="menu-cap1">
+                    <a th:href="@{/home(cateid=3)}" class="menu-cap1-title">ĐIỆN THOẠI</a>
+                </li>
+                <li class="menu-cap1">|</li>
+                <li class="menu-cap1 search">
+                    <form th:action="@{/home}" method="get">
+                        <input type="search" name="search" id="search">
+                        <button type="submit"><i class="fas fa-search"></i></button>
+                    </form>
+                </li>
+                <li class="menu-cap1 cart">
+                    <a th:href="@{/user/cart}"><i class="fas fa-shopping-bag"></i> Giỏ hàng</a>
+                </li>
+                <li th:if="${session.user == null}" class="menu-cap1 login">
+                    <a th:href="@{/login}"><i class="far fa-user"></i> ĐĂNG NHẬP </a>
+                </li>
+                <li th:if="${session.user != null}" class="menu-cap1 user">
+                    <a th:href="@{/profile}"><i class="far fa-user"></i> <span th:text="${session.user.account.username}"></span></a>
+                    <ul class="menu-cap2">
+                        <li><a th:href="@{/orderhistory}" th:if="${session.user.role.roleID == 2}">Xem lịch sử mua hàng</a></li>
+                        <li><a th:href="@{/manager}" th:if="${session.user.role.roleID == 1}">Quản lý</a></li>
+                        <li><a th:href="@{/changepassword}">Đổi mật khẩu</a></li>
+                        <li><a th:href="@{/exit}">Đăng xuất</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+</div>

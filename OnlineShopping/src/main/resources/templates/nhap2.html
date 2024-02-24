@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 50px;
+        }
+
+        .stars {
+            width: 150px;
+            overflow: auto;
+            margin-left: 50px;
+            color: #FD4;
+        }
+
+        .stars input.star {
+            display: none;
+        }
+
+        .stars label.star {
+            font-size: 25px; /* Điều chỉnh kích thước sao tùy ý */
+            cursor: pointer;
+        }
+
+        .stars input.star:checked ~ label.star {
+            color: rgb(165, 165, 165);
+        }
+
+        .stars input.star:checked {
+            color: #FD4;
+        }
+
+    </style>
+</head>
+<body>
+
+<h2>Đánh giá sản phẩm</h2>
+
+<div class="stars">
+    <form action="">
+      <input class="star star-5" id="star-5-1" type="radio" name="star"/>
+      <label class="star star-5" for="star-5-1">&#9733;</label>
+      <input class="star star-4" id="star-4-1" type="radio" name="star"/>
+      <label class="star star-4" for="star-4-1">&#9733;</label>
+      <input class="star star-3" id="star-3-1" type="radio" name="star"/>
+      <label class="star star-3" for="star-3-1">&#9733;</label>
+      <input class="star star-2" id="star-2-1" type="radio" name="star" />
+      <label class="star star-2" for="star-2-1">&#9733;</label>
+      <input class="star star-1" id="star-1-1" type="radio" name="star"/>
+      <label class="star star-1" for="star-1-1">&#9733;</label>
+    </form>
+
+    <form action="">
+        <input class="star star-5" id="star-5-2" type="radio" name="star"/>
+        <label class="star star-5" for="star-5-2">&#9733;</label>
+        <input class="star star-4" id="star-4-2" type="radio" name="star"/>
+        <label class="star star-4" for="star-4-2">&#9733;</label>
+        <input class="star star-3" id="star-3-2" type="radio" name="star"/>
+        <label class="star star-3" for="star-3-2">&#9733;</label>
+        <input class="star star-2" id="star-2-2" type="radio" name="star" />
+        <label class="star star-2" for="star-2-2">&#9733;</label>
+        <input class="star star-1" id="star-1-2" type="radio" name="star"/>
+        <label class="star star-1" for="star-1-2">&#9733;</label>
+      </form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,117 @@
+.content a {
+    text-decoration: none;
+}
+
+.content ul {
+    list-style: none;
+    font-weight: bold;
+}
+
+.slidebar {
+    text-align: center;
+    padding: 65px 0;
+    letter-spacing: 15px;
+    background: url(https://png.pngtree.com/thumb_back/fh260/back_our/20200701/ourmid/pngtree-simple-and-cute-shopping-background-image_345879.jpg);
+    margin-bottom: 20px;
+    /* background-color: #0097a5; */
+}
+
+.slidebar h1 {
+    font-family: 'Courier New', Courier, monospace;
+    color: black;
+    font-weight: 900;
+    font-size: 50px;
+    background-color: white;
+}
+
+.content {
+    /* border: 1px solid black; */
+    width: 90%;
+    min-height: 14vw;
+    display: block;
+    margin: auto;
+    overflow: auto;
+    padding-bottom: 50px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 2px 0 rgb(60 64 67/ 10%), 0 2px 6px 2px rgb(60 64 67/ 15%); 
+}
+
+.content .item {
+    width: 290px;
+    height: 400px;
+    /* border: 1px solid black; */
+    box-shadow: 0 1px 2px 0 rgb(60 64 67/ 10%), 0 2px 6px 2px rgb(60 64 67/ 15%);
+    float: left;
+    margin: 10px;
+    text-align: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.content .item .item-img {
+    width: 250px;
+    height: 240px;
+    /* border: 1px solid black; */
+    margin: auto;
+    margin-top: 10px;
+}
+
+.content .item .item-img img {
+    width: 100%;
+    height: 100%;
+}
+
+.content .item .item-info {
+    /* border: 1px solid black; */
+    width: 90%;
+    height: 50px;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.content .item .item-info h3 {
+    margin: 5px;
+    white-space: nowrap;  /* Không làm ngắt dòng */
+    overflow: hidden;     /* Ẩn phần dư thừa */
+    text-overflow: ellipsis;  /* Hiển thị dấu ba chấm nếu quá dài */
+    font-size: 20px;
+}
+
+.content .item .item-info span{
+    color: red;
+    font-size: large;
+    white-space: nowrap;
+}
+
+.content .item .rating {
+    margin: 5px;
+}
+
+.content .item .rating span {
+    font-size: 20px;
+    color: #FD4;
+}
+
+.content .item .item-button {
+    /* border: 1px solid black; */
+    width: 90%;
+    height: 50px;
+    margin: auto;
+}
+
+.content .item .item-button .addcart {
+    /* border: 1px solid black; */
+    padding: 5px;
+    font-size: medium;
+    display: block;
+    margin-top: 10px;
+    color: white;
+    background-color: #dd8306;
+}
+
+.content .item .item-button .addcart:hover {
+    background-color: red;
+}
+
+        

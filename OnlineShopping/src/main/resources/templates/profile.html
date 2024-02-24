@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông tin cá nhân</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link th:href="@{/css/reuse.css}" rel="stylesheet">
+    <style>
+        .profile {
+            /* border: 1px solid black; */
+            box-shadow: 0 1px 2px 0 rgb(60 64 67/ 10%), 0 2px 6px 2px rgb(60 64 67/ 15%); 
+            width: 50%;
+            margin: auto;
+            margin-top: 3vw;
+            padding-bottom: 3vw;
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .profile ul {
+            list-style: none;
+            color: red;
+        }
+
+        .profile .frame {
+            /* border: 1px solid black; */
+            width: 90%;
+            margin: auto;
+            height: 5vw;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1vw;
+        }
+
+        .profile .frame .frame_1 {
+            /* border: 1px solid black; */
+            width: 30%;
+            padding: 10px; /* Thêm padding nếu cần thiết */
+            box-sizing: border-box; /* Đảm bảo rằng padding không tăng kích thước của phần tử */
+        }
+
+        .profile .frame .frame_2 {
+            /* border: 1px solid black; */
+            width: 50%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .profile .frame .frame_3 {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .profile label {
+            display: block;
+            text-align: left;
+            color: rgb(92, 92, 92);
+        }
+
+        .profile label span {
+            color: red;
+        }
+
+        .profile input {
+            display: block;
+            width: 100%;
+            height: 2.5vw;
+            margin: auto;
+            border-radius: 0.5vw;
+            border: 2px solid rgb(207, 205, 205);
+        }
+
+        .profile input:hover {
+            border: 2px solid turquoise;
+        }
+
+        .profile button {
+            width: 70%;
+            height: 2.5vw;
+            margin: auto;
+            margin-top: 2vw;
+            margin-bottom: 2vw;
+            font-weight: bold;
+            font-size: 1vw;
+            background-color: rgb(94, 94, 255);
+            border: 1px solid white;
+            color: white;
+        }
+
+        .profile a {
+            text-decoration: none;
+            color: red;
+        }
+        
+        .mess_success {
+            background-color: rgba(133, 235, 233,0.8); 
+            color: white;
+            padding: 10px;
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            min-width: 400px;
+            min-height: 200px;
+            line-height: 200px;
+            text-align: center;
+            border-radius: 20px;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body>
+	<div th:replace="header.html :: header"></div>
+    <div class="distance2"></div>
+    <div class="profile">
+        <br>
+        <h2>Hồ sơ của tôi </h2>
+        <br>
+        <ul th:if="${error != null}" class="error">
+            <li th:text="${error}" style="color: red;"></li>
+        </ul>
+        <form th:action="@{/do-profile}" method="post">
+            <div class="frame">
+                <div class="frame_1">
+                    <label for="firstname">Họ: <span>*</span></label>
+                    <input type="text" name="firstname" id="" th:value="${session.user.name.firstName}">
+                </div>
+                <div class="frame_1">
+                    <label for="midname">Tên đệm: </label>
+                    <input type="text" name="midname" th:value="${session.user.name.midName}">
+                </div>
+                <div class="frame_1">
+                    <label for="lastname">Tên: <span>*</span></label>
+                    <input type="text" name="lastname" id="" th:value="${session.user.name.lastName}">
+                </div>
+            </div>
+            <div class="frame">
+                <div class="frame_2">
+                    <label for="username">Tên đăng nhập: <span>*</span></label>
+                    <input type="text" name="username" id="" th:value="${session.user.account.username}">
+                </div>
+                <div class="frame_2">
+                    <label for="phone">Số điện thoại: <span>*</span></label>
+                    <input type="tel" name="phone" id="" th:value="${session.user.phone}">
+                </div>
+            </div>
+            <div class="frame">
+                <div class="frame_2">
+                    <label for="email">Email: <span>*</span></label>
+                    <input type="email" name="email" id="" th:value="${session.user.email}">
+                </div>
+                <div class="frame_2">
+                    <label for="dob">Ngày sinh: </label>
+                    <input type="date" name="dob" id="" th:value="${session.user.dob}">
+                </div>
+            </div>
+            <div class="frame">
+                <div class="frame_1">
+                    <label for="ward">Xã / Phường:</label>
+                    <input type="text" name="ward" id="" th:value="${session.user.address.ward}">
+                </div>
+                <div class="frame_1">
+                    <label for="district">Huyện:</label>
+                    <input type="text" name="district" id="" th:value="${session.user.address.district}">
+                </div>
+                <div class="frame_1">
+                    <label for="city">Thành phố:</label>
+                    <input type="text" name="city" id="" th:value="${session.user.address.city}">
+                </div>
+            </div>
+            <div class="frame">
+                <div class="frame_3">
+                    <label for="addressDetail">Địa chỉ cụ thể:</label>
+                    <input type="text" name="addressDetail" id="" th:value="${session.user.address.addressDetail}">
+                </div>
+            </div>
+            <button type="submit">Lưu</button>
+        </form>
+    </div>
+    
+    <div class="mess_success" id="message">
+        <h1 th:text="${success}"></h1>
+    </div>
+    <script th:if="${success != null}">
+    	function showMessageSuccess(time){
+                    var successMess = document.getElementById('message');
+                    successMess.style.display = 'block';
+                    setTimeout(function() {
+                        successMess.style.display = 'none';
+
+                    }, time);
+                }
+
+        showMessageSuccess(2000);
+	</script>
+</body>
+</html>

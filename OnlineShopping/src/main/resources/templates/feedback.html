@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .feedback {
+            background-color: rgba(151, 150, 148, 0.5);
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .feedback .infor-feedback {
+            background-color: rgba(255, 255, 255); 
+            padding: 1vw;
+            /* display: block; */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 50%;
+            height: 35vw;
+            border-radius: 10px;
+            transform: translate(-50%, -50%);
+            overflow: auto;
+            /* box-sizing: border-box; */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .feedback .infor-feedback .cancel {
+            /* border: 1px solid black; */
+            font-size: 2vw;
+            float: right;
+        }
+
+        .feedback .infor-feedback .cancel a {
+            text-decoration: none;
+            color: black;
+        }
+
+        .feedback .infor-feedback h1 {
+            text-align: center;
+        }
+
+        .feedback .infor-feedback .feedback-1 {
+            /* border: 1px solid black; */
+            width: 90%;
+            margin: auto;
+            overflow: auto;
+            margin-bottom: 2vw;
+        }
+
+        .feedback .infor-feedback .feedback-1 .feedback-item {
+            border: 1px solid rgb(178, 178, 178);
+            height: 5vw;
+            display: flex;
+            justify-content: space-between;
+            line-height: 100%;
+            text-align: center;
+            margin-bottom: 1vw;
+        }
+
+        .feedback .infor-feedback .feedback-1 .feedback-item .img {
+            /* border: 1px solid black; */
+            width: 7%;
+            margin: 0.3vw;
+        }
+
+        .feedback .infor-feedback .feedback-1 .feedback-item .img img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .feedback .infor-feedback .feedback-1 .feedback-item .name {
+            /* border: 1px solid black; */
+            width: 40%;
+        }
+
+        .feedback .infor-feedback .feedback-1 .feedback-item .price {
+            /* border: 1px solid black; */
+            width: 20%;
+        }
+
+        .feedback .infor-feedback .feedback-1 .feedback-item .quantity {
+            /* border: 1px solid black; */
+            width: 10%;
+        }
+
+        .feedback .infor-feedback .feedback-1 .feedback-user {
+            /* border: 1px solid rgb(178, 178, 178); */
+            min-height: 10vw;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .feedback .infor-feedback .feedback-1 .feedback-user .icon {
+            border:  2px solid black;
+            width: 2vw;
+            height: 2vw;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 1.5vw;
+            margin: 1vw;
+        }
+
+        .feedback .infor-feedback .feedback-1 .feedback-user .infor-rating {
+            /* border:  1px solid black; */
+            width: 90%;
+            padding: 1vw;
+        }
+
+        .feedback .infor-feedback .feedback-1 .feedback-user .infor-rating textarea {
+            width: 100%;
+            height: 10vw;
+            resize: none;
+        }
+
+        .rating-star {
+            display: inline-block;
+            unicode-bidi: bidi-override;
+            direction: rtl;
+            text-align: left;
+        }
+
+        .rating-star input {
+            display: none;
+        }
+
+        .rating-star label {
+            float: right;
+            cursor: pointer;
+            color: #ccc;
+        }
+
+        .rating-star label:before {
+            content: "\2605";
+            font-size: 2em;
+        }
+
+        .rating-star input:checked ~ label,
+        .rating-star input:checked ~ label:before {
+            color: #FFD700;
+        }
+
+        .rating-star label:hover,
+        .rating-star label:hover ~ label,
+        .rating-star input:checked ~ label:hover,
+        .rating-star input:checked ~ label:hover ~ label {
+            color: #FFD700;
+        }
+
+        .feedback .infor-feedback button {
+            width: 20%;
+            height: 2.5vw;
+            float: right;
+            margin-right: 3vw;
+            margin-bottom: 2vw;
+            font-weight: bold;
+            font-size: 1vw;
+            background-color: rgb(94, 94, 255);
+            border: 1px solid white;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div th:fragment="fb">
+        <div class="feedback">
+            <div class="infor-feedback">
+                <div class="cancel"><a th:href="@{/cancelfeedback}" class="fas fa-times"></a></div>
+                <h1>Bình luận</h1>
+                <form th:action="@{/do-feedback}" method="post" th:each="entry : ${order.cart.items}">
+					
+					<input type="hidden" name="itemid" th:value="${entry.key.itemID}">
+					<input type="hidden" name="orderid" th:value="${order.orderID}">
+                    <div class="feedback-1" >
+                        <div class="feedback-item">
+                            <div class="img"><img th:src="*{entry.key.getImage().link}" alt="${entry.key.getImage().name}"></div>
+                            <div class="name">
+                                <h4 th:text="${entry.key.name}"></h4>
+                            </div>
+                            <div class="price">
+                                <h4 th:text="${#numbers.formatInteger(entry.key.price.sellingPrice, 3, 'POINT')} + '₫'"></h4>
+                            </div>
+                            <div class="quantity">
+                                <h4 th:text="${entry.value}"></h4>
+                            </div>
+                        </div>
+                        <div th:if="${entry.key.equals(item)}">
+							<ul th:if="${error != null}" class="error">
+					            <li th:text="${error}" style="color: red; text-align: center;"></li>
+					        </ul>
+						</div>
+                        <div class="feedback-user">
+                            <div class="icon">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="infor-rating">
+                                <span><b th:text="${session.user.account.username}">Username</b></span><br><br>
+                                <textarea name="text" id="" cols="30" rows="10"></textarea>
+                            </div>
+                        </div>
+                        <div class="rating-star">
+					        <input type="radio" th:id="star5+${entry.key.itemID}" name="star" value="5" />
+					        <label th:for="star5+${entry.key.itemID}"></label>
+					        <input type="radio" th:id="star4+${entry.key.itemID}" name="star" value="4" />
+					        <label th:for="star4+${entry.key.itemID}"></label>
+					        <input type="radio" th:id="star3+${entry.key.itemID}" name="star" value="3" checked/>
+					        <label th:for="star3+${entry.key.itemID}"></label>
+					        <input type="radio" th:id="star2+${entry.key.itemID}" name="star" value="2" />
+					        <label th:for="star2+${entry.key.itemID}"></label>
+					        <input type="radio" th:id="star1+${entry.key.itemID}" name="star" value="1" />
+					        <label th:for="star1+${entry.key.itemID}"></label>
+					    </div>
+                    </div>
+    
+                    <button type="submit">Lưu</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

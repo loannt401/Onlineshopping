@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/css/reuse.css}" rel="stylesheet">
+    <link th:href="@{/css/login.css}" rel="stylesheet">
+    <title>Đăng nhập</title>
+</head>
+<body>
+	<div th:replace="header2.html :: header2"></div>
+    <div class="distance2"></div>
+    <div class="login">
+        <br><br>
+        <h1>Đăng nhập</h1>
+        <br>
+		<ul th:if="${error != null}" class="error">
+	        <li th:if="${error == 1}">Sai tên đăng nhập hoặc mật khẩu</li>
+	        <li th:if="${error == 2}">Điền thiếu thông tin</li>
+	    </ul>
+        <br>
+        <form th:action="@{/do-login}" method="post">
+            <label for="username">Tên đăng nhập:</label><br>
+            <input type="text" name="username" placeholder="Tên đăng nhập"><br>
+            <label for="password">Mật khẩu: </label><br>
+            <input type="password" name="password" id="password" placeholder="Mật khẩu"><br>
+            <button type="submit">Đăng nhập</button>
+        </form>
+        <p>
+            <a href="">Quên mật khẩu</a>
+        </p>
+        <p>
+            <span>Bạn chưa có tài khoản?</span>
+            <span><a th:href="@{/register}">Đăng kí</a></span>
+        </p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh toán qua thẻ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link th:href="@{/css/reuse.css}" rel="stylesheet">
+    <style>
+        .paycard {
+            /* border: 1px solid black; */
+            box-shadow: 0 1px 2px 0 rgb(60 64 67/ 10%), 0 2px 6px 2px rgb(60 64 67/ 15%); 
+            width: 40%;
+            margin: auto;
+            margin-top: 3vw;
+            padding-bottom: 3vw;
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .paycard ul {
+            list-style: none;
+            color: red;
+        }
+
+        .paycard label {
+            display: block;
+            text-align: left;
+            margin-left: 6vw;
+            color: rgb(92, 92, 92);
+        }
+
+        .paycard input {
+            display: block;
+            width: 70%;
+            height: 2.5vw;
+            margin: auto;
+            border-radius: 0.5vw;
+            border: 2px solid rgb(207, 205, 205);
+        }
+
+        .paycard input:hover {
+            border: 2px solid turquoise;
+        }
+
+        .paycard button {
+            width: 70%;
+            height: 2.5vw;
+            margin: auto;
+            margin-top: 2vw;
+            margin-bottom: 2vw;
+            font-weight: bold;
+            font-size: 1vw;
+            background-color: rgb(94, 94, 255);
+            border: 1px solid white;
+            color: white;
+        }
+
+        .paycard span {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+	<div th:replace="header.html :: header"></div>
+    <div class="distance"></div>
+    <div class="paycard">
+        <br>
+        <h1>Thông tin thẻ</h1>
+        <br>
+        <ul th:if="${error != null}" class="error">
+            <li th:text="${error}" style="color: red;"></li>
+        </ul>
+        <form th:action="@{/do-paycard}" method="post">
+            <label for="cardBank">Tên ngân hàng: </label><br>
+            <input type="text" name="cardBank" id=""><br>
+            <label for="cardName">Tên tài khoản: </label><br>
+            <input type="text" name="cardName" id=""><br>
+            <label for="cardNumber">Số tài khoản: </label><br>
+            <input type="text" name="cardNumber" id=""><br>
+            <h3>Tổng tiền: </h3>
+            <span th:text="${#numbers.formatInteger(session.payment.totalPrice, 3, 'POINT')} + '₫'"></span><br>
+            <button type="submit">Thanh toán</button>
+        </form>
+    </div>
+</body>
+</html>
